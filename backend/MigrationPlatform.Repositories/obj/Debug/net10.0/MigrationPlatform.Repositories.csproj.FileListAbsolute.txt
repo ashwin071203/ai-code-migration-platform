@@ -1,0 +1,11 @@
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\bin\Debug\net10.0\MigrationPlatform.Repositories.deps.json
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\bin\Debug\net10.0\MigrationPlatform.Repositories.dll
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\bin\Debug\net10.0\MigrationPlatform.Repositories.pdb
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\MigrationPlatform.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\MigrationPlatform.Repositories.AssemblyInfoInputs.cache
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\MigrationPlatform.Repositories.AssemblyInfo.cs
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\MigrationPlatform.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\MigrationPlatform.Repositories.dll
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\refint\MigrationPlatform.Repositories.dll
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\MigrationPlatform.Repositories.pdb
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.Repositories\obj\Debug\net10.0\ref\MigrationPlatform.Repositories.dll

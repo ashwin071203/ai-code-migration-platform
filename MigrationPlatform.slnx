@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/MigrationPlatform.AI/MigrationPlatform.AI.csproj" />
+    <Project Path="backend/MigrationPlatform.Api/MigrationPlatform.Api.csproj" />
+    <Project Path="backend/MigrationPlatform.Data/MigrationPlatform.Data.csproj" />
+    <Project
+      Path="backend/MigrationPlatform.MigrationEngine/MigrationPlatform.MigrationEngine.csproj" />
+    <Project Path="backend/MigrationPlatform.Repositories/MigrationPlatform.Repositories.csproj" />
+    <Project Path="backend/MigrationPlatform.Services/MigrationPlatform.Services.csproj" />
+    <Project Path="backend/MigrationPlatform.Tests/MigrationPlatform.Tests.csproj" />
+    <Project Path="backend/MigrationPlatform.Worker/MigrationPlatform.Worker.csproj" />
+  </Folder>
+</Solution>

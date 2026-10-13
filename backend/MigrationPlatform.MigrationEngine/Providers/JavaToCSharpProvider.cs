@@ -1,0 +1,80 @@
+using System.Text.RegularExpressions;
+using MigrationPlatform.MigrationEngine.Interfaces;
+using MigrationPlatform.MigrationEngine.Models;
+
+namespace MigrationPlatform.MigrationEngine.Providers;
+
+public sealed partial class JavaToCSharpProvider : IMigrationProvider
+{
+    public bool CanHandle(string sourceTechnology, string targetTechnology) => sourceTechnology.Equals("Java", StringComparison.OrdinalIgnoreCase) && targetTechnology.Equals("C#", StringComparison.OrdinalIgnoreCase);
+
+    public async Task<MigrationResult> ExecuteAsync(MigrationRequest request, CancellationToken cancellationToken)
+    {
+        if (!Directory.Exists(request.SourceRoot)) return new("Failed", null, [], [], "The source workspace does not exist.");
+        Directory.CreateDirectory(request.OutputRoot);
+        var files = new List<string>();
+        var warnings = new HashSet<string>();
+        foreach (var sourceFile in Directory.EnumerateFiles(request.SourceRoot, "*.java", SearchOption.AllDirectories))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var relative = Path.GetRelativePath(request.SourceRoot, sourceFile);
+            var destinationRelative = Path.ChangeExtension(relative, ".cs");
+            var destination = Path.Combine(request.OutputRoot, destinationRelative);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            var source = await File.ReadAllTextAsync(sourceFile, cancellationToken);
+            var transformed = Transform(source, warnings);
+            await File.WriteAllTextAsync(destination, transformed, cancellationToken);
+            files.Add(destinationRelative);
+        }
+        foreach (var sourceFile in Directory.EnumerateFiles(request.SourceRoot, "*", SearchOption.AllDirectories).Where(file => !file.EndsWith(".java", StringComparison.OrdinalIgnoreCase)))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var relative = Path.GetRelativePath(request.SourceRoot, sourceFile);
+            var destination = Path.Combine(request.OutputRoot, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            await using var input = File.OpenRead(sourceFile);
+            await using var output = File.Create(destination);
+            await input.CopyToAsync(output, cancellationToken);
+            files.Add(relative);
+        }
+        await File.WriteAllTextAsync(Path.Combine(request.OutputRoot, "FORGESHIFT-MANUAL-REVIEW.md"), "# Manual review required\n\nJava source files received deterministic syntax mappings. Framework annotations, dependency injection, persistence, streams, and tests require review before production use.\n\n## Warnings\n\n" + string.Join("\n", warnings.Select(warning => $"- {warning}")) + "\n", cancellationToken);
+        return new("ManualReview", request.OutputRoot, warnings.ToArray(), files, null);
+    }
+
+    private static string Transform(string source, ISet<string> warnings)
+    {
+        if (source.Contains('@')) warnings.Add("Annotations were not mapped automatically.");
+        if (source.Contains(".stream(", StringComparison.Ordinal)) warnings.Add("Java streams require manual LINQ review.");
+        if (source.Contains("springframework", StringComparison.OrdinalIgnoreCase)) warnings.Add("Spring framework types require ASP.NET Core mapping.");
+        var result = source;
+        result = PackageRegex().Replace(result, string.Empty);
+        result = ImportRegex().Replace(result, string.Empty);
+        result = AnnotationRegex().Replace(result, string.Empty);
+        result = ThrowsRegex().Replace(result, string.Empty);
+        result = result.Replace("final ", string.Empty, StringComparison.Ordinal);
+        result = result.Replace("System.out.println", "Console.WriteLine", StringComparison.Ordinal);
+        result = result.Replace("System.out.print", "Console.Write", StringComparison.Ordinal);
+        result = result.Replace("ArrayList", "List", StringComparison.Ordinal);
+        result = result.Replace("HashMap", "Dictionary", StringComparison.Ordinal);
+        result = result.Replace("HashSet", "HashSet", StringComparison.Ordinal);
+        result = Regex.Replace(result, @"\bString\b", "string");
+        result = Regex.Replace(result, @"\bboolean\b", "bool");
+        result = Regex.Replace(result, @"\bInteger\b", "int");
+        result = Regex.Replace(result, @"\bLong\b", "long");
+        result = Regex.Replace(result, @"\bDouble\b", "double");
+        result = Regex.Replace(result, @"\bList<", "List<");
+        result = Regex.Replace(result, @"\bMap<", "Dictionary<");
+        result = Regex.Replace(result, @"\bSet<", "HashSet<");
+        result = Regex.Replace(result, @"\btrue\b", "true");
+        result = Regex.Replace(result, @"\bfalse\b", "false");
+        result = Regex.Replace(result, @"\bpublic\s+static\s+void\s+main\s*\(\s*string\[\]\s+args\s*\)", "public static void Main(string[] args)");
+
+        var header = "// Generated by ForgeShift. Review before use.\nusing System;\nusing System.Collections.Generic;\n\n";
+        return header + result.Trim() + Environment.NewLine;
+    }
+
+    [GeneratedRegex(@"^\s*package\s+[^;]+;\s*$", RegexOptions.Multiline)] private static partial Regex PackageRegex();
+    [GeneratedRegex(@"^\s*import\s+[^;]+;\s*$", RegexOptions.Multiline)] private static partial Regex ImportRegex();
+    [GeneratedRegex(@"^\s*@[A-Za-z_$][\w$]*(?:\([^\r\n]*\))?\s*$", RegexOptions.Multiline)] private static partial Regex AnnotationRegex();
+    [GeneratedRegex(@"\s+throws\s+[A-Za-z_$][\w$]*(?:\s*,\s*[A-Za-z_$][\w$]*)*")] private static partial Regex ThrowsRegex();
+}

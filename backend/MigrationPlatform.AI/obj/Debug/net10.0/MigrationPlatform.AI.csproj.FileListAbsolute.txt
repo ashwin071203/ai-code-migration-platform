@@ -1,0 +1,11 @@
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\bin\Debug\net10.0\MigrationPlatform.AI.deps.json
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\bin\Debug\net10.0\MigrationPlatform.AI.dll
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\bin\Debug\net10.0\MigrationPlatform.AI.pdb
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\MigrationPlatform.AI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\MigrationPlatform.AI.AssemblyInfoInputs.cache
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\MigrationPlatform.AI.AssemblyInfo.cs
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\MigrationPlatform.AI.csproj.CoreCompileInputs.cache
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\MigrationPlatform.AI.dll
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\refint\MigrationPlatform.AI.dll
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\MigrationPlatform.AI.pdb
+C:\Users\ashwi\OneDrive\Documents\Desktop\CodeMigration\backend\MigrationPlatform.AI\obj\Debug\net10.0\ref\MigrationPlatform.AI.dll
